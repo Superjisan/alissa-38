@@ -17,6 +17,11 @@ BIRTH_DATE = date(1987, 8, 13)  # Adjust the year based on her actual birth year
 BIRTHDAY_2024 = date(2024, 8, 13)
 TODAY = date.today()
 
+# Chinese Zodiac information for 1987
+CHINESE_ZODIAC_1987 = "Rabbit"  # 1987 was the Year of the Rabbit
+ZODIAC_ELEMENT = "Fire"  # Fire Rabbit
+ZODIAC_DESCRIPTION = "Fire Rabbit - Creative, intelligent, and compassionate"
+
 # Calculate time lived
 def calculate_time_lived():
     """Calculate various time units lived"""
@@ -80,7 +85,58 @@ with col5:
 
 st.markdown("---")
 
+# Chinese Zodiac section
+st.subheader("🐰 Your Chinese Zodiac Sign")
 
+# Create zodiac info cards
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.info(f"**Zodiac Animal:** {CHINESE_ZODIAC_1987}")
+
+with col2:
+    st.success(f"**Element:** {ZODIAC_ELEMENT}")
+
+with col3:
+    st.warning(f"**Year:** 1987")
+
+# Zodiac characteristics
+st.markdown(f"**{ZODIAC_DESCRIPTION}**")
+
+# Create a chart showing Chinese Zodiac cycle
+st.subheader("📊 Chinese Zodiac Cycle")
+
+# Chinese Zodiac animals in order
+zodiac_animals = [
+    "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
+    "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"
+]
+
+# Create data for the chart
+zodiac_data = pd.DataFrame({
+    'Animal': zodiac_animals,
+    'Position': range(1, 13),
+    'Is_Your_Year': [animal == CHINESE_ZODIAC_1987 for animal in zodiac_animals]
+})
+
+# Create a bar chart highlighting the Rabbit year
+fig = px.bar(
+    zodiac_data,
+    x='Animal',
+    y='Position',
+    color='Is_Your_Year',
+    title="Chinese Zodiac Animals (Highlighting Your Year - Rabbit)",
+    color_discrete_map={True: '#FF6B6B', False: '#4ECDC4'},
+    labels={'Position': 'Zodiac Position', 'Is_Your_Year': 'Your Year'}
+)
+
+fig.update_layout(
+    title_font_size=20,
+    height=400,
+    showlegend=False
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 # Fun facts section
 st.markdown("---")
